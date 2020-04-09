@@ -12,7 +12,7 @@ public class PagamentoComBoleto extends Pagamento {
 	private static final long serialVersionUID = 1L;
 	
 	private Date dataVencimneto;
-	private Date dataPagaemnto;
+	private Date dataPagamento;
 
 	
 	public PagamentoComBoleto() {
@@ -20,10 +20,10 @@ public class PagamentoComBoleto extends Pagamento {
 	}
 
 
-	public PagamentoComBoleto(Integer id, EstadoPagamento estadoPagamento, Pedido pedido,Date dataVencimento,Date dataPagamento) {
+	public PagamentoComBoleto(Integer id, EstadoPagamento estadoPagamento, Pedido pedido,Date dataPagamento, Date dataVencimneto) {
 		super(id, estadoPagamento, pedido);
 		this.dataVencimneto = dataVencimneto;
-		this.dataPagaemnto = dataPagaemnto;
+		this.dataPagamento = dataPagamento;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -38,13 +38,13 @@ public class PagamentoComBoleto extends Pagamento {
 	}
 
 
-	public Date getDataPagaemnto() {
-		return dataPagaemnto;
+	public Date getDataPagamento() {
+		return dataPagamento;
 	}
 
 
-	public void setDataPagaemnto(Date dataPagaemnto) {
-		this.dataPagaemnto = dataPagaemnto;
+	public void setDataPagaemnto(Date dataPagamento) {
+		this.dataPagamento = dataPagamento;
 	}
 
 	

@@ -1,6 +1,7 @@
 package com.rafael.projetomvc;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.rafael.projetomvc.dominio.Cidade;
 import com.rafael.projetomvc.dominio.Cliente;
 import com.rafael.projetomvc.dominio.Endereco;
 import com.rafael.projetomvc.dominio.Estado;
+import com.rafael.projetomvc.dominio.ItemPedido;
 import com.rafael.projetomvc.dominio.Pagamento;
 import com.rafael.projetomvc.dominio.PagamentoComBoleto;
 import com.rafael.projetomvc.dominio.PagamentoComCartao;
@@ -25,6 +27,7 @@ import com.rafael.projetomvc.repository.CidadeRepository;
 import com.rafael.projetomvc.repository.ClienteRepository;
 import com.rafael.projetomvc.repository.EnderecoRepository;
 import com.rafael.projetomvc.repository.EstadoRepository;
+import com.rafael.projetomvc.repository.ItemPedidoRepository;
 import com.rafael.projetomvc.repository.PagamentoRepository;
 import com.rafael.projetomvc.repository.PedidoRepository;
 import com.rafael.projetomvc.repository.ProdutoRepository;
@@ -55,6 +58,9 @@ public class ProjetoMvcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetoMvcApplication.class, args);
@@ -117,22 +123,27 @@ public class ProjetoMvcApplication implements CommandLineRunner {
 		
 		Pagamento pag1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 4);
 		ped1.setPagamento(pag1);
-		Pagamento pag2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"),null);
+		Pagamento pag2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2,null, sdf.parse("20/10/2017 00:00"));
 		ped2.setPagamento(pag2);
 		
 		cl1.getPedidos().addAll(Arrays.asList(ped1,ped2));
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pag1,pag2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 80.00, 2, 0.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 800.00, 1, 100.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		
