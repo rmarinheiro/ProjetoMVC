@@ -1,5 +1,6 @@
 package com.rafael.projetomvc.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,10 @@ public class CategoriaService {
 			throw new DataIntegrityException("Não é Possível excluir uma categoria que tenha produdutos");
 		}
 		
+	}
+
+	public List<Categoria> findAll() {
+		return categoriaService.findAll();
 	}
 
 }
