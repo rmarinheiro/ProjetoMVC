@@ -25,4 +25,9 @@ public class CategoriaService {
 		return obj.orElseThrow(()-> new ObjectNotFoundException("Objeto não encontrado ID" + id + "Tipo" + Categoria.class));
 	}
 
+	public Categoria update(Categoria obj) {
+		buscar(obj.getId());
+		return categoriaService.save(obj);
+	}
+
 }
