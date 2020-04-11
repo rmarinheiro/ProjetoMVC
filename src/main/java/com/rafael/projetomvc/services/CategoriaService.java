@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.rafael.projetomvc.DTO.CategoriaDTO;
 import com.rafael.projetomvc.dominio.Categoria;
 import com.rafael.projetomvc.repository.CategoriaRepository;
 import com.rafael.projetomvc.services.exception.DataIntegrityException;
@@ -54,6 +55,10 @@ public class CategoriaService {
 	public Page<Categoria> findPage(Integer page , Integer linesPage, String orderBy,String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPage, Direction.valueOf(direction), orderBy);
 		return categoriaService.findAll(pageRequest);
+	}
+	
+	public Categoria fromDTO(CategoriaDTO categoriaDTO) {
+		return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
 	}
 
 }
