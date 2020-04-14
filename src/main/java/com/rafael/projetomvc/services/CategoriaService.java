@@ -33,8 +33,13 @@ public class CategoriaService {
 	}
 
 	public Categoria update(Categoria obj) {
-		buscar(obj.getId());
-		return categoriaService.save(obj);
+		Categoria newObj = buscar(obj.getId());
+		updateDate(newObj,obj);
+		return categoriaService.save(newObj);
+	}
+
+	private void updateDate(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
 	}
 
 	public void delete(Integer id) {
