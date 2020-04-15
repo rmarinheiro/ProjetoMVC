@@ -2,16 +2,24 @@ package com.rafael.projetomvc.services.validation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.ObjDoubleConsumer;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.rafael.projetomvc.DTO.ClienteNewDTO;
+import com.rafael.projetomvc.dominio.Cliente;
 import com.rafael.projetomvc.dominio.enums.TipoCliente;
+import com.rafael.projetomvc.repository.ClienteRepository;
 import com.rafael.projetomvc.resources.exception.FieldMessage;
 import com.rafael.projetomvc.services.validation.utils.BR;
 
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
 	
 	@Override
 	public void initialize(ClienteInsert ann) {
@@ -30,6 +38,11 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 			list.add(new FieldMessage("cpfOuCnpj" , "CNPJ Invalido"));
 		}
 		// inclua os testes aqui, inserindo erros na lista
+		
+		Cliente aux = clienteRepository.findByEmail(objDto.getEmail());
+		if(aux != null) {
+			list.add(new FieldMessage("Email", "Email Já Existente"));
+		}
 
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();
@@ -38,4 +51,6 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 		}
 		return list.isEmpty();
 	}
+	
+
 }
