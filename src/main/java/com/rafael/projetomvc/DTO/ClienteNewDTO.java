@@ -2,21 +2,44 @@ package com.rafael.projetomvc.DTO;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.rafael.projetomvc.services.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 	
 	
 	private static final long serialVersionUID = 1L;
+	@NotEmpty(message = "Prenchimento Obrigatório")
+	@Length(min = 5 , max = 120 , message = "O Tamanho tem que ser de 5 a 120 caracteres")
 	private String nome;
+	
+	@NotEmpty
+	@Email(message = "Email Inválido")
 	private String email;
+	
+	@NotEmpty(message = "Preenchimento é Obrigatório")
 	private String cpfOuCnpj;
+	
 	private Integer tipoCliente;
 	
+	@NotEmpty(message = "Preenchimento é Obrigatório")
 	private String logradouro;
-	private String numero;
-	private String complemento;
-	private String bairro;
-	private String cep;
 	
+	private String numero;
+	@NotEmpty(message = "Preenchimento é Obrigatório")
+	private String complemento;
+	
+	@NotEmpty(message = "Preenchimento é Obrigatório")
+	private String bairro;
+	
+	@NotEmpty(message = "Preenchimento é Obrigatório")
+	private String cep;
+	@NotEmpty(message = "Preenchimento é Obrigatório")
 	private String telefone1;
 	private String telefone2;
 	private String telefone3;
