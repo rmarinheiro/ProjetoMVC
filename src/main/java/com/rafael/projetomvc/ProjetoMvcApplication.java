@@ -186,8 +186,8 @@ public class ProjetoMvcApplication implements CommandLineRunner {
 		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pag1,pag2));
 		
-		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
-		ItemPedido ip2 = new ItemPedido(ped1, p3, 80.00, 2, 0.00);
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 2000.00, 1, 200.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 80.00, 2, 40.00);
 		ItemPedido ip3 = new ItemPedido(ped2, p2, 800.00, 1, 100.00);
 		
 		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
