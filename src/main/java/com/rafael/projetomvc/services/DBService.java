@@ -81,6 +81,8 @@ public class DBService {
 		
 		
 		
+		
+		
 		Produto p1 = new Produto(null, "computador", 2000.00);
 		
 		Produto p2 = new Produto(null, "Impressora", 800.00);
