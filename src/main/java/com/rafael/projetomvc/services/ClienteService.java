@@ -18,9 +18,12 @@ import com.rafael.projetomvc.dominio.Categoria;
 import com.rafael.projetomvc.dominio.Cidade;
 import com.rafael.projetomvc.dominio.Cliente;
 import com.rafael.projetomvc.dominio.Endereco;
+import com.rafael.projetomvc.dominio.enums.Perfil;
 import com.rafael.projetomvc.dominio.enums.TipoCliente;
 import com.rafael.projetomvc.repository.ClienteRepository;
 import com.rafael.projetomvc.repository.EnderecoRepository;
+import com.rafael.projetomvc.security.UserSS;
+import com.rafael.projetomvc.services.exception.AuthorizationException;
 import com.rafael.projetomvc.services.exception.DataIntegrityException;
 import com.rafael.projetomvc.services.exception.ObjectNotFoundException;
 
@@ -36,7 +39,15 @@ public class ClienteService {
 	@Autowired
 	private BCryptPasswordEncoder pe;
 	
+
+	
 	public Cliente find(Integer cod) {
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !cod.equals(user.getId())) {
+			throw new AuthorizationException("Acesso Negado");
+			
+		}
+		
 		Optional<Cliente> obj = clienteRepository.findById(cod);
 		return obj.orElseThrow(()-> new ObjectNotFoundException("Cliente Id não encontrado id:" + cod + Cliente.class));
 	}
