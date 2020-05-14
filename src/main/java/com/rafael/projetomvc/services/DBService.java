@@ -2,6 +2,7 @@ package com.rafael.projetomvc.services;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -183,29 +184,35 @@ public class DBService {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 19:32"), cl1, end1);
 		Pedido ped2 = new Pedido(null, sdf.parse("12/10/2017 20:09"), cl1, end2);
+		Pedido ped3 = new Pedido(null, sdf.parse("12/10/2017 20:09"), cl2, end3);
 		
 		Pagamento pag1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 4);
 		ped1.setPagamento(pag1);
 		Pagamento pag2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2,null, sdf.parse("20/10/2017 00:00"));
 		ped2.setPagamento(pag2);
+		Pagamento pag3 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped3,null, sdf.parse("20/10/2017 00:00"));
+		ped3.setPagamento(pag3);
 		
 		cl1.getPedidos().addAll(Arrays.asList(ped1,ped2));
+		cl2.getPedidos().addAll(Arrays.asList(ped3));
 		
-		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
-		pagamentoRepository.saveAll(Arrays.asList(pag1,pag2));
+		pedidoRepository.saveAll(Arrays.asList(ped1,ped2,ped3));
+		pagamentoRepository.saveAll(Arrays.asList(pag1,pag2,pag3));
 		
 		ItemPedido ip1 = new ItemPedido(ped1, p1, 2000.00, 1, 200.00);
 		ItemPedido ip2 = new ItemPedido(ped1, p3, 80.00, 2, 40.00);
 		ItemPedido ip3 = new ItemPedido(ped2, p2, 800.00, 1, 100.00);
+		ItemPedido ip4 = new ItemPedido(ped3, p2, 800.00, 1, 100.00);
 		
 		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
 		ped2.getItens().addAll(Arrays.asList(ip3));
+		ped3.getItens().addAll(Arrays.asList(ip4));
 		
 		p1.getItens().addAll(Arrays.asList(ip1));
-		p2.getItens().addAll(Arrays.asList(ip3));
+		p2.getItens().addAll(Arrays.asList(ip3,ip4));
 		p3.getItens().addAll(Arrays.asList(ip2));
 		
-		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3,ip4));
 
 	}
 
