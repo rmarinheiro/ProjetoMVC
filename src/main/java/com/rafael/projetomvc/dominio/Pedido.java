@@ -80,6 +80,7 @@ public class Pedido implements Serializable {
 		this.pagamento = pagamento;
 	}
 
+
 	public Cliente getCliente() {
 		return cliente;
 	}
@@ -87,10 +88,6 @@ public class Pedido implements Serializable {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-
-	
-	
-	
 
 	public Endereco getEnderecoDeEntrega() {
 		return enderecoDeEntrega;
