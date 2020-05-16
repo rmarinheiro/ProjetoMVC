@@ -1,5 +1,6 @@
 package com.rafael.projetomvc.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.rafael.projetomvc.DTO.ClienteDTO;
 import com.rafael.projetomvc.DTO.ClienteNewDTO;
@@ -39,6 +41,9 @@ public class ClienteService {
 	@Autowired
 	private BCryptPasswordEncoder pe;
 	
+	
+	@Autowired
+	private S3Service s3Service;
 
 	
 	public Cliente find(Integer cod) {
@@ -114,6 +119,8 @@ public class ClienteService {
 		return obj;
 	}
 	
-	
+	public URI uploadProfilePicture(MultipartFile multipartfile) {
+		return s3Service.uploadFile(multipartfile);
+	}
 
 }
