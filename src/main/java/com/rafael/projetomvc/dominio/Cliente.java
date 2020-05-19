@@ -57,7 +57,7 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy = "cliente" , cascade = CascadeType.ALL)
 	private List<Pedido>pedidos = new ArrayList<>();
 	
-	private String image;
+	
 	
 	public Cliente() {
 		addPerfil(Perfil.CLIENTE);
@@ -181,13 +181,7 @@ public class Cliente implements Serializable {
 		return true;
 	}
 
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
+	
 
 	
 	

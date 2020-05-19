@@ -1,10 +1,12 @@
 package com.rafael.projetomvc.services;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,9 +43,15 @@ public class ClienteService {
 	@Autowired
 	private BCryptPasswordEncoder pe;
 	
+	@Autowired
+	private ImageService imageService;
+	
 	
 	@Autowired
 	private S3Service s3Service;
+	
+	@Value("${img.prefix.client.profile}")
+	private String prefix;
 
 	
 	public Cliente find(Integer cod) {
@@ -125,13 +133,13 @@ public class ClienteService {
 			throw new AuthorizationException("Acesso Negado");
 		}
 		
-		URI uri= s3Service.uploadFile(multipartfile);
 		
-		Cliente cliente = find(user.getId());
-		cliente.setImage(uri.toString());
-		clienteRepository.save(cliente);
+		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartfile);
+		String fileName = prefix + user.getId() + ".jpg";
+		return s3Service.uploadFile(imageService.getInputStream(jpgImage,"jpg"), fileName, "image");
 		
-		return uri;
+		
+		
 		
 		
 	}
