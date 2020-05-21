@@ -1,5 +1,6 @@
 package com.rafael.projetomvc.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,13 @@ public class EstadoService {
 	@Autowired
 	private EstadoRepository estadoRepository;
 	
-	public Estado find(Integer id) {
-		Optional<Estado> obj = estadoRepository.findById(id);
-		return obj.orElseThrow(()->new ObjectNotFoundException("Estado de ID não encontrado" + id + "Tipo" + Estado.class));
+	public List<Estado> find() throws Exception {
+		try {
+			return estadoRepository.findAllByOrderByNome();
+		} catch (Exception e) {
+			throw new Exception("Lista de Estados não encontrada");
+		}
+		
 	}
 	
 

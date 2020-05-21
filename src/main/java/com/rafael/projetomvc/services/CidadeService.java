@@ -1,5 +1,6 @@
 package com.rafael.projetomvc.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,9 @@ public class CidadeService {
 	@Autowired
 	private CidadeRepository cidadeRepository;
 	
-	public Cidade find(Integer id) {
-		Optional<Cidade> obj = cidadeRepository.findById(id);
-		return obj.orElseThrow( ()-> new ObjectNotFoundException("Cidade de ID não encontrada " + id + "Tipo "+ Cidade.class));
+	public List<Cidade> findByEstados(Integer id) {
+		List<Cidade> obj = cidadeRepository.findCidades(id);
+		return obj;
 	}
 
 }
