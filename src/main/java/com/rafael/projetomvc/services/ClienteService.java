@@ -150,6 +150,21 @@ public class ClienteService {
 		
 	}
 	
+	public Cliente findByEmail(String email) {
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getEmail())) {
+			throw new AuthorizationException ("Acesso Negado");
+		}
+		
+		Cliente obj = clienteRepository.findByEmail(email);
+		if(obj == null) {
+			throw new ObjectNotFoundException("Objeto não encontrado Id: " + user.getId() + " , Tipo: " + Cliente.class );
+			
+		}
+		
+		return obj;
+	}
+	
 	
 
 }
